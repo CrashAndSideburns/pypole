@@ -50,12 +50,11 @@ class Simulation:
     def f_net(self):
         """ Return the net force on the dipole. """
         return self.force(self.dipole.positive_position(), self.dipole.charge) + self.force(self.dipole.negative_position(), -self.dipole.charge)
-    def run(self):
-        """ Run the simulation using Euler's method to solve the ODE. """
-        while True:
-            self.dipole.velocity += self.dt * self.f_net() / (self.dipole.positive_mass + self.dipole.negative_mass)
-            self.dipole.angular_vel += self.dt * self.torque() / self.dipole.moment_of_inertia()
-            self.dipole.position += self.dt * self.dipole.velocity
-            self.dipole.angle += self.dt * self.dipole.angular_vel
-            # to be replaced with something to actually update a GUI
-            print(f"Dipole Position: {self.dipole.position}\nDipole Angle: {self.dipole.angle}\n")
+    def advance(self):
+        """ Apply a single iteration of Euler's method. """
+        self.dipole.velocity += self.dt * self.f_net() / (self.dipole.positive_mass + self.dipole.negative_mass)
+        self.dipole.angular_vel += self.dt * self.torque() / self.dipole.moment_of_inertia()
+        self.dipole.position += self.dt * self.dipole.velocity
+        self.dipole.angle += self.dt * self.dipole.angular_vel
+        # to be replaced with something to actually update a GUI
+        print(f"Dipole Position: {self.dipole.position}\nDipole Angle: {self.dipole.angle}\n")
