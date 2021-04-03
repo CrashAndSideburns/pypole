@@ -1,5 +1,4 @@
 import sys
-import random
 from PySide6 import QtCore, QtWidgets, QtGui
 
 class PypoleGUI(QtWidgets.QWidget):
@@ -16,7 +15,7 @@ class PypoleGUI(QtWidgets.QWidget):
         dipole_settings = QtWidgets.QWidget()
         dipole_settings.setLayout(QtWidgets.QHBoxLayout())
 
-        dial = QtWidgets.QDial()
+        dial = QtWidgets.QDial(minimum=0, maximum=16, wrapping=True)
         dipole_charge = QtWidgets.QSpinBox()
         dipole_negative_mass = QtWidgets.QSpinBox()
         dipole_positive_mass = QtWidgets.QSpinBox()
@@ -56,11 +55,3 @@ class PypoleGUI(QtWidgets.QWidget):
         point_charge_settings.layout().insertSpacing(4, 100)
 
         self.layout().addWidget(point_charge_settings)
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-
-    widget = PypoleGUI()
-    widget.show()
-
-    sys.exit(app.exec_())

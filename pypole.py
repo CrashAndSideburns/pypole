@@ -34,10 +34,11 @@ class Dipole:
         return self.position - self.centre_of_mass()
 
 class Simulation:
-    def __init__(self, dipole, point_charges, dt):
+    def __init__(self, dipole, point_charges, dt, paused = True):
         self.dipole = dipole
         self.point_charges = point_charges
         self.dt = dt
+        self.paused = paused
     def torque(self):
         """ Return the net torque on the dipole in the simulation. """
         return np.cross(self.dipole.positive_position(), self.force(self.dipole.positive_position(), self.dipole.charge)) + np.cross(self.dipole.negative_position(), self.force(self.dipole.negative_position(), -self.dipole.charge))
@@ -56,5 +57,3 @@ class Simulation:
         self.dipole.angular_vel += self.dt * self.torque() / self.dipole.moment_of_inertia()
         self.dipole.position += self.dt * self.dipole.velocity
         self.dipole.angle += self.dt * self.dipole.angular_vel
-        # to be replaced with something to actually update a GUI
-        print(f"Dipole Position: {self.dipole.position}\nDipole Angle: {self.dipole.angle}\n")
